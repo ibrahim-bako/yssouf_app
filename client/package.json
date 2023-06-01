@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "devDependencies": {
+    "@nuxtjs/google-fonts": "2.0.0",
+    "@nuxtjs/tailwindcss": "6.1.3",
+    "@nuxtus/cli": "2.0.0",
+    "@nuxtus/nuxt-localtunnel": "^1.0.1",
+    "@nuxtus/nuxt-module": "2.2.0",
+    "@sidebase/nuxt-pdf": "^0.1.1",
+    "@tailwindcss/typography": "^0.5.9",
+    "nuxt": "3.0.0",
+    "nuxt-quasar-ui": "^1.7.3"
+  },
+  "dependencies": {
+    "@directus/sdk": "^10.3.3",
+    "@quasar/extras": "^1.16.3",
+    "@types/pdfmake": "^0.2.2",
+    "@types/validator": "^13.7.17",
+    "@vueuse/nuxt": "^10.1.2",
+    "html2pdf.js": "^0.9.0",
+    "jspdf": "^2.5.1",
+    "moment": "^2.29.4",
+    "nuxt-directus": "^5.3.0",
+    "pdfmake": "^0.2.7",
+    "quasar": "^2.11.10",
+    "validator": "^13.9.0",
+    "vue-html2pdf": "^1.8.0"
+  },
+  "name": "app"
+}

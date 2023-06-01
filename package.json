@@ -1,0 +1,25 @@
+{
+	"name": "app",
+	"description": "",
+	"version": "0.0.1",
+	"keywords": [
+		"Directus",
+		"Nuxt",
+		"Nuxtus",
+		"Tailwind",
+		"Tailwindcss"
+	],
+	"scripts": {
+		"client": "cd client && npm run dev -- -o",
+		"server": "cd server && npx directus start",
+		"start": "concurrently \"npm run server\" \"npm run client\""
+	},
+	"devDependencies": {
+		"concurrently": "7.4.0"
+	},
+	"dependencies": {
+		"@nuxtus/directus-extension-nuxtus-hook": "^1.4.0",
+		"chart.js": "^4.3.0",
+		"sqlite3": "^5.1.6"
+	}
+}
