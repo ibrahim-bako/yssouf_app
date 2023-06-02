@@ -57,7 +57,6 @@ watch(
       })
 
       if (response instanceof Failure) throw new Failure()
-      console.log("response1", response)
 
       state.value.sellInvoices = response.sellInvoices
       state.value.totalPrice = response.totalPrice
@@ -75,7 +74,12 @@ onMounted(async () => {
 
     state.value.consumerList = response
     state.value.consumer = response[0]
-  } catch (err) {}
+  } catch (err) {
+    return $q.notify({
+      color: "red",
+      message: "erreur de chanrgement des ressources. Recharger la page.",
+    })
+  }
 })
 
 import { TDocumentDefinitions } from "pdfmake/interfaces"
@@ -124,9 +128,15 @@ const doc = computed<TDocumentDefinitions>(() => {
               return [
                 padInvoiceNumber(invoice.id || 0).toString(),
                 useDateFormat(invoice.date, "DD/MM/YYYY").value,
-                total.toString(),
+                formatNumberToDisplay(total),
               ]
             }),
+
+            [
+              { text: "Total", style: "tableHeader", colSpan: 2 },
+              "",
+              { text: formatNumberToDisplay(state.value.totalPrice), style: "tableHeader" },
+            ],
           ],
         },
       },
@@ -142,8 +152,6 @@ const doc = computed<TDocumentDefinitions>(() => {
       },
     },
   }
-
-  console.log(doc.content)
 
   return doc
 })

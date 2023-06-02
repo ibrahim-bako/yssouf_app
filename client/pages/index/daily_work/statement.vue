@@ -6,6 +6,8 @@ definePageMeta({
   middleware: ["auth"],
 })
 
+const $q = useQuasar()
+
 type State = {
   minDate: Date
   maxDate: Date
@@ -58,7 +60,10 @@ watch(
 
       state.value.production = response
     } catch (err) {
-      console.log(err)
+      return $q.notify({
+        color: "red",
+        message: "erreur de chanrgement des ressources. Recharger la page.",
+      })
     }
   },
   { immediate: true }
@@ -88,32 +93,27 @@ const doc = computed<TDocumentDefinitions>(() => {
         table: {
           widths: [170, 120],
           body: [
-            // [
-            //   { text: "N°Facture", style: "tableHeader" },
-            //   { text: "Date", style: "tableHeader" },
-            //   { text: "Prix", style: "tableHeader" },
-            // ],
+            [
+              { text: "Type", style: "tableHeader" },
+              { text: "Valeur (en kg)", style: "tableHeader" },
+            ],
 
-            [{ text: "Quantité Utilisé" }, { text: state.value.production.totalUsed }],
-            [{ text: "Quantité Trié" }, { text: state.value.production.totalSorted }],
-            [{ text: "Quantité Epluché" }, { text: state.value.production.totalPeeled }],
-            [{ text: "Quantité Seché" }, { text: state.value.production.totalDried }],
-
-            // ...state.value.map((PurshaseOrder) => {
-            //   let total = 0
-
-            //   PurshaseOrder.products.map((product) => {
-            //     if (typeof product !== "number") {
-            //       total += product.quantity * product.unit_price
-            //     }
-            //   })
-
-            //   return [
-            //     padInvoiceNumber(PurshaseOrder.id || 0).toString(),
-            //     useDateFormat(PurshaseOrder.date, "DD/MM/YYYY").value,
-            //     total.toString(),
-            //   ]
-            // }),
+            [
+              { text: "Quantité Utilisé" },
+              { text: formatNumberToDisplay(state.value.production.totalUsed) },
+            ],
+            [
+              { text: "Quantité Trié" },
+              { text: formatNumberToDisplay(state.value.production.totalSorted) },
+            ],
+            [
+              { text: "Quantité Epluché" },
+              { text: formatNumberToDisplay(state.value.production.totalPeeled) },
+            ],
+            [
+              { text: "Quantité Seché" },
+              { text: formatNumberToDisplay(state.value.production.totalDried) },
+            ],
           ],
         },
       },

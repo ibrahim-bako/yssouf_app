@@ -6,6 +6,8 @@ definePageMeta({
   middleware: ["auth"],
 })
 
+const $q = useQuasar()
+
 type State = {
   minDate: Date
   maxDate: Date
@@ -62,7 +64,10 @@ watch(
 
       state.value.ordersProducts = response2
     } catch (err) {
-      console.log(err)
+      return $q.notify({
+        color: "red",
+        message: "erreur de chanrgement des ressources. Recharger la page.",
+      })
     }
   },
   { immediate: true }
@@ -90,13 +95,18 @@ const doc = computed<TDocumentDefinitions>(() => {
           body: [
             [
               { text: "Désignation", style: "tableHeader" },
-              { text: "Quantité", style: "tableHeader" },
+              { text: "Quantité (kg)", style: "tableHeader" },
             ],
-            ...state.value.ordersProducts.map((order) => [order.name, order.weight]),
+            ...state.value.ordersProducts.map((order) => [
+              order.name,
+              formatNumberToDisplay(order.weight),
+            ]),
             [
               { text: "Total", style: "tableHeader" },
               {
-                text: state.value.ordersProducts.reduce((add, a) => add + a.weight, 0),
+                text: formatNumberToDisplay(
+                  state.value.ordersProducts.reduce((add, a) => add + a.weight, 0)
+                ),
                 style: "tableHeader",
               },
             ],
@@ -114,11 +124,16 @@ const doc = computed<TDocumentDefinitions>(() => {
               { text: "Désignation", style: "tableHeader" },
               { text: "Quantité", style: "tableHeader" },
             ],
-            ...state.value.sellsProducts.map((sell) => [sell.name, sell.weight]),
+            ...state.value.sellsProducts.map((sell) => [
+              sell.name,
+              formatNumberToDisplay(sell.weight),
+            ]),
             [
               { text: "Total", style: "tableHeader" },
               {
-                text: state.value.sellsProducts.reduce((add, a) => add + a.weight, 0),
+                text: formatNumberToDisplay(
+                  state.value.sellsProducts.reduce((add, a) => add + a.weight, 0)
+                ),
                 style: "tableHeader",
               },
             ],

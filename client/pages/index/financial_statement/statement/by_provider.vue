@@ -8,6 +8,8 @@ definePageMeta({
   middleware: ["auth"],
 })
 
+const $q = useQuasar()
+
 type State = {
   minDate: Date
   maxDate: Date
@@ -74,7 +76,12 @@ onMounted(async () => {
 
     state.value.providerList = response
     state.value.provider = response[0]
-  } catch (err) {}
+  } catch (err) {
+    return $q.notify({
+      color: "red",
+      message: "erreur de chanrgement des ressources. Recharger la page.",
+    })
+  }
 })
 
 import { TDocumentDefinitions } from "pdfmake/interfaces"
@@ -123,9 +130,15 @@ const doc = computed<TDocumentDefinitions>(() => {
               return [
                 padInvoiceNumber(PurshaseOrder.id || 0).toString(),
                 useDateFormat(PurshaseOrder.date, "DD/MM/YYYY").value,
-                total.toString(),
+                formatNumberToDisplay(total),
               ]
             }),
+
+            [
+              { text: "Total", style: "tableHeader", colSpan: 2 },
+              "",
+              { text: formatNumberToDisplay(state.value.totalPrice), style: "tableHeader" },
+            ],
           ],
         },
       },
@@ -141,8 +154,6 @@ const doc = computed<TDocumentDefinitions>(() => {
       },
     },
   }
-
-  console.log(doc.content)
 
   return doc
 })

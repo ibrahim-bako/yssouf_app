@@ -8,6 +8,8 @@ definePageMeta({
   middleware: ["auth"],
 })
 
+const $q = useQuasar()
+
 type State = {
   minDate: Date
   maxDate: Date
@@ -70,7 +72,10 @@ watch(
       state.value.purshaseOrders = response2.purshaseOrders
       state.value.orderTotalPrice = response2.total_price
     } catch (err) {
-      console.log(err)
+      return $q.notify({
+        color: "red",
+        message: "erreur de chanrgement des ressources. Recharger la page.",
+      })
     }
   },
   { immediate: true }
@@ -135,14 +140,14 @@ const doc = computed<TDocumentDefinitions>(() => {
                   useDateFormat(order.date, "DD/MM/YYYY").value,
                   // @ts-ignore
                   order.provider.name.toString(),
-                  total.toString(),
+                  formatNumberToDisplay(total),
                 ]
               }),
             [
               { text: "Total", colSpan: 3, style: "tableHeader" },
               " ",
               " ",
-              state.value.orderTotalPrice,
+              { text: formatNumberToDisplay(state.value.orderTotalPrice), style: "tableHeader" },
             ],
           ],
         },
@@ -188,14 +193,14 @@ const doc = computed<TDocumentDefinitions>(() => {
                   useDateFormat(invoice.date, "DD/MM/YYYY").value,
                   // @ts-ignore
                   invoice.consumer.name.toString(),
-                  total.toString(),
+                  formatNumberToDisplay(total),
                 ]
               }),
             [
               { text: "Total", colSpan: 3, style: "tableHeader" },
               " ",
               " ",
-              state.value.sellTotalPrice,
+              { text: formatNumberToDisplay(state.value.sellTotalPrice), style: "tableHeader" },
             ],
           ],
         },
@@ -216,8 +221,6 @@ const doc = computed<TDocumentDefinitions>(() => {
       },
     },
   }
-
-  console.log(doc.content)
 
   return doc
 })

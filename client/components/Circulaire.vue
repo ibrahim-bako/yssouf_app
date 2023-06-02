@@ -1,5 +1,5 @@
 <template>
-  <div class="w-96 h-96">
+  <div class="w-72 h-72">
     <canvas ref="docs"></canvas>
   </div>
 </template>

@@ -121,7 +121,7 @@ const menuList = ref([
             dense
             outline
             label="Etats des facture"
-            @click="navigateTo('/financial_statement/statement')"
+            @click="navigateTo('/financial_statement/statement/by_dates')"
           />
           <q-btn
             dense
