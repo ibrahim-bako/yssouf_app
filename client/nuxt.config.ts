@@ -32,7 +32,7 @@ export default {
   directus: {
     // token: process.env.NUXT_PUBLIC_NUXTUS_DIRECTUS_TOKEN,
 
-    url: "http://0.0.0.0:8055",
+    url: "http://localhost:8055",
   },
   nuxtus: {
     authDirectus: false,
