@@ -16,6 +16,8 @@ const dateLimits = reactive<{ min: string | null; max: string | null }>({
   max: null,
 })
 
+const salaire = ref<number>(0)
+
 const { data: staffs, refresh } = useAsyncData(
   async () => {
     let staffs = await getItems<Staff>({
@@ -93,7 +95,7 @@ const doc = computed<TDocumentDefinitions>(() => {
                 staff.tel,
                 staff.card_number,
                 staff.presences.length,
-                staff.presences.length * 1500,
+                staff.presences.length * salaire.value,
               ]
             }),
           ],
@@ -132,6 +134,7 @@ onMounted(() => {})
     <top-bar>
       <template v-slot:right>
         <div class="flex space-x-5">
+          <q-input outlined dense type="number" label="paye par jour" v-model="salaire" />
           <q-input outlined dense type="date" label="date minimal" v-model="dateLimits.min" />
           <q-input outlined dense type="date" label="date maximal" v-model="dateLimits.max" />
         </div>
